@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
@@ -31,7 +33,7 @@ public class Email {
 		this.pdf = pdf;
 	}
 	
-	public boolean send(String recipient) {
+	public boolean send() {
 		
 		  Properties props = new Properties();
 	        props.put("mail.smtp.starttls.enable", "true");
@@ -85,8 +87,13 @@ public class Email {
 	
 	//for added security email credentials are stored in seperate txt file
 	public static void readInEmailInfo() {
-		
-		in = new Scanner("credentials.txt");
+		File file = new File("credentials.txt");
+		try {
+			in = new Scanner(file);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		username = in.nextLine();
 		password = in.nextLine();
 		printer = in.nextLine();

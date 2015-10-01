@@ -23,7 +23,6 @@ import org.jsoup.select.Elements;
 
 public class Program {
 	
-	public static List<Notes> allNotes = new ArrayList<Notes>();
 	public static Scanner in = null;
 	public static Timer timer = null;
 	

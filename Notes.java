@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
@@ -68,8 +69,10 @@ public class Notes {
 						output.close();
 						
 						notesDB.add(link.attr("href"));
+						updateDB();
 						Email email = new Email(outputFile);
-						email.send(); 
+						email.send();
+						
 						
 					}
 				}
@@ -95,12 +98,30 @@ public class Notes {
 		File file = new File("postedNotes.txt");
 		try {
 			in = new Scanner(file);
+			while (in.hasNextLine()) {
+				notesDB.add(in.nextLine());
+			}
+			in.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		while (in.hasNextLine()) {
-			notesDB.add(in.nextLine());
+		
+		
+	}
+	
+	public static void updateDB() {
+		File file = new File("postedNotes.txt");
+		try {
+			PrintWriter out = new PrintWriter("postedNotes.txt");
+			for (String note : notesDB) {
+			out.write(note + "\n");
+			}
+			out.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 	}
 }

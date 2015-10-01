@@ -29,20 +29,21 @@ public class Program {
 	
 	public static void main(String[] args) {
 		
-		Notes.loadSavedNotes();
+		loadInformation();
 		System.out.println("Welcome to Note Scraper.\n");
 		while (true) {
 		if (scrapeDate() > 0 && scrapeDate() < 5) {
 			System.out.println("Time to scrape!");
+			
+			
+			Notes.scapeForNotes();
 			try {
+				//Pause program for 6 seconds
 				Thread.sleep(6*1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("It has been a minute!");
-			Notes.scapeForNotes();
-			
 				
 			
 		} else {

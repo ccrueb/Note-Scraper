@@ -6,7 +6,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -37,6 +40,8 @@ public class Notes {
 		InputStream input = null;
 		OutputStream output = null;
 		HttpURLConnection connection = null;
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
 		try {
 			Document doc = Jsoup.connect("http://pages.cs.wisc.edu/~cs367-1/resources/outlines/").get();
 			Elements links = doc.select("a[href$=.pdf]");
@@ -45,6 +50,7 @@ public class Notes {
 			} else {
 				for (Element link : links) {
 					if (!notesDB.contains(link.attr("href"))) {
+						System.out.println("Found new note: " + link.attr("href") + " at: " + dateFormat.format(date));
 						String pdfUrl = "http://pages.cs.wisc.edu/~cs367-1/resources/outlines/" + link.attr("href");
 						URL url = new URL(pdfUrl);
 						connection = (HttpURLConnection) url.openConnection();
@@ -63,7 +69,7 @@ public class Notes {
 						
 						notesDB.add(link.attr("href"));
 						Email email = new Email(outputFile);
-						email.send(recipient); 
+						email.send(); 
 						
 					}
 				}

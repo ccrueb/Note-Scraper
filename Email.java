@@ -74,7 +74,7 @@ public class Email {
 	            //Attachment
 	          
 	            message.setContent(multipart);
-	            //Transport.send(message);
+	            Transport.send(message);
 
 	            System.out.println("Done");
 

@@ -58,7 +58,7 @@ public class Notes {
 						connection.connect();
 
 						input = connection.getInputStream();
-						String outputFile = link.attr("href") +".pdf";
+						String outputFile = "notes.pdf";
 						output = new FileOutputStream(outputFile);
 
 						byte data[] = new byte[4096];
@@ -67,13 +67,13 @@ public class Notes {
 							output.write(data, 0, count);
 						}
 						output.close();
-						
+
 						notesDB.add(link.attr("href"));
 						updateDB();
 						Email email = new Email(outputFile);
 						email.send();
-						
-						
+
+
 					}
 				}
 			}
@@ -106,22 +106,26 @@ public class Notes {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
+
 	}
-	
+
 	public static void updateDB() {
 		File file = new File("postedNotes.txt");
 		try {
 			PrintWriter out = new PrintWriter("postedNotes.txt");
-			for (String note : notesDB) {
-			out.write(note + "\n");
+			for (int i = 0; i< notesDB.size(); i++) {
+				if (i < notesDB.size()-1) {
+					out.write(notesDB.get(i) + "\n");
+				} else {
+					out.write(notesDB.get(i));
+				}
 			}
 			out.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 }
